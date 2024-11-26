@@ -5,50 +5,38 @@ class Greeter {
         return 'Hello, my friend.';
       }
   
-      let allNames = [];
-      for (let i = 0; i < names.length; i++) {
-        let name = names[i];
-        if (name.indexOf(',') !== -1) {
-          let splitNames = name.split(',');
-          for (let j = 0; j < splitNames.length; j++) {
-            allNames.push(splitNames[j].trim());
-          }
+      const allNames = [];
+      for (const name of names) {
+        if (name.includes(',')) {
+          allNames.push.apply(allNames, name.split(',').map(n => n.trim()));
         } else {
           allNames.push(name);
         }
       }
   
-      let normalNames = [];
-      let shoutingNames = [];
-      for (let i = 0; i < allNames.length; i++) {
-        let name = allNames[i];
-        if (name === name.toUpperCase()) {
-          shoutingNames.push(name);
-        } else {
-          normalNames.push(name);
-        }
+      const normalNames = allNames.filter(name => name !== name.toUpperCase());
+      const shoutingNames = allNames.filter(name => name === name.toUpperCase());
+
+      var normalGreeting = '';
+      var shoutingGreeting = '';
+
+      if(normalNames.length > 0){
+        normalGreeting = `Hello ${this.formatNames(normalNames)}.`
       }
-  
-      let normalGreeting = '';
-      let shoutingGreeting = '';
-  
-      if (normalNames.length > 0) {
-        normalGreeting = 'Hello ' + this.formatNames(normalNames) + '.';
+      if(shoutingNames.length > 0){
+        shoutingGreeting = `HELLO ${this.formatNames(shoutingNames).toUpperCase()}!`;
       }
-      if (shoutingNames.length > 0) {
-        shoutingGreeting = 'HELLO ' + this.formatNames(shoutingNames).toUpperCase() + '!';
-      }
-  
-      return normalGreeting.trim() + (normalGreeting && shoutingGreeting ? ' ' : '') + shoutingGreeting.trim();
+
+      return [normalGreeting, shoutingGreeting].filter(Boolean).join(' ');
     }
   
+
     static formatNames(names) {
       if (names.length === 1) {
         return names[0];
       }
-      let lastName = names[names.length - 1];
-      let otherNames = names.slice(0, names.length - 1);
-      return otherNames.join(', ') + ' and ' + lastName;
+      const lastName = names.pop();
+      return `${names.join(', ')} and ${lastName}`;
     }
   }
   
