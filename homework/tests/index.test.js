@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const Greeter = require("../src/index");
 describe('Greeter', () => {
     test('No input should greet with "my friend"', () => {
@@ -28,3 +29,7 @@ describe('Greeter', () => {
 
 });
 
+=======
+// TESTS HERE
+describe("Description", () => {});
+>>>>>>> d58822bb8283522961830d6ba7d9bbe59875a604
